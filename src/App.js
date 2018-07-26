@@ -71,8 +71,7 @@ class App extends Component {
               .then(resp => resp.json())
               .then(user => {
                 if (user && user.email) {
-                  console.log(user)
-                  this.loadUser(data)
+                  this.loadUser(user)
                   this.onRouteChange('home')
                 }
               })
