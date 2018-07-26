@@ -47,6 +47,41 @@ class App extends Component {
     this.state = initialState;
   }
 
+  //check for session token to avoid sing in if we have already done it.
+  componentDidMount() {
+    const token = window.sessionStorage.getItem('token');
+    if (token) {
+      fetch('http://localhost:3000/signin', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token
+        }
+      })
+        .then(resp => resp.json())
+        .then(data => {
+          if (data && data.id) {
+            fetch(`http://localhost:3000/profile/${data.id}`, {
+              method: 'get',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token
+              }
+            })
+              .then(resp => resp.json())
+              .then(user => {
+                if (user && user.email) {
+                  console.log(user)
+                  this.loadUser(data)
+                  this.onRouteChange('home')
+                }
+              })
+          }
+        })
+        .catch(console.log)
+    }
+  }
+
   loadUser = (data) => {
     this.setState({user: {
       id: data.id,
