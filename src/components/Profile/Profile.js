@@ -56,6 +56,7 @@ class Profile extends React.Component {
             <h1>{this.state.name}</h1>
             <h4>{`Images Submitted: ${user.entries}`}</h4>
             <p>{`Member since: ${new Date(user.joined).toLocaleDateString()}`}</p>
+            <p>{`I am ${this.state.age} years old and I own a ${this.state.pet}`}</p>
             <hr />
             <label className="mt2 fw6" htmlFor="user-name">Name</label>
             <input onChange={this.onFormChange}
